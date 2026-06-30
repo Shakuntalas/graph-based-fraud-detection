@@ -48,12 +48,14 @@ def predict():
 
     anomaly_result = runtime.ANOMALY_DETECTOR.score(amount)
     runtime.ANOMALY_DETECTOR.add_amount(amount)
+    sender_count = runtime.TRANSACTION_GRAPH.degree(sender) if sender in runtime.TRANSACTION_GRAPH else 0
     adjusted_probability = adjust_runtime_probability(
         model_probability=result["fraud_probability"],
         sender=sender,
         amount=amount,
         transaction_type=transaction_type,
         is_anomaly=bool(anomaly_result["is_anomaly"]),
+        sender_count=sender_count,
     )
     adjusted_prediction = int(adjusted_probability > result["threshold"])
 
@@ -68,7 +70,7 @@ def predict():
         anomaly_score=float(anomaly_result["anomaly_score"]),
     )
 
-    alerts = generate_alerts(transaction, bool(anomaly_result["is_anomaly"]))
+    alerts = generate_alerts(transaction, bool(anomaly_result["is_anomaly"]), sender_count=sender_count)
     export_graph_html(runtime.TRANSACTION_GRAPH, risky_accounts=get_risky_accounts())
 
     response = format_transaction(transaction)

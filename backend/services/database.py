@@ -13,6 +13,7 @@ import bcrypt
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATABASE_DIR = PROJECT_ROOT / "database"
 DATABASE_PATH = DATABASE_DIR / "users.db"
+_INITIALIZED_PATHS: set[str] = set()
 
 
 def utc_now() -> str:
@@ -20,14 +21,21 @@ def utc_now() -> str:
 
 
 def get_connection() -> sqlite3.Connection:
-    DATABASE_DIR.mkdir(parents=True, exist_ok=True)
-    connection = sqlite3.connect(DATABASE_PATH)
+    database_path = Path(DATABASE_PATH)
+    database_dir = database_path.parent
+    database_dir.mkdir(parents=True, exist_ok=True)
+    connection = sqlite3.connect(database_path)
     connection.row_factory = sqlite3.Row
     return connection
 
 
 def init_db() -> None:
     """Create required SQLite tables if they do not exist."""
+    database_path = Path(DATABASE_PATH)
+    path_key = str(database_path)
+    if path_key in _INITIALIZED_PATHS:
+        return
+
     with get_connection() as connection:
         connection.executescript(
             """
@@ -65,6 +73,7 @@ def init_db() -> None:
             );
             """
         )
+    _INITIALIZED_PATHS.add(path_key)
 
 
 def hash_password(password: str) -> str:
@@ -168,6 +177,22 @@ def list_transactions(limit: int = 200, user_id: int | None = None) -> list[dict
     with get_connection() as connection:
         rows = connection.execute(query, params).fetchall()
     return [dict(row) for row in rows]
+
+
+def count_transactions_by_sender(sender: str, limit: int = 50) -> int:
+    query = """
+        SELECT COUNT(*) AS total
+        FROM (
+            SELECT 1
+            FROM transactions
+            WHERE sender = ?
+            ORDER BY id DESC
+            LIMIT ?
+        )
+    """
+    with get_connection() as connection:
+        row = connection.execute(query, (sender, limit)).fetchone()
+    return int(row["total"]) if row else 0
 
 
 def create_alert(

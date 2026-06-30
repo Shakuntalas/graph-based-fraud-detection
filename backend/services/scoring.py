@@ -11,6 +11,7 @@ def adjust_runtime_probability(
     amount: float,
     transaction_type: str,
     is_anomaly: bool,
+    sender_count: int = 0,
 ) -> float:
     """Blend model probability with runtime graph/anomaly signals."""
     runtime_probability = 0.0
@@ -26,14 +27,13 @@ def adjust_runtime_probability(
     if is_anomaly:
         runtime_probability += 0.18
 
-    sender_count = sum(1 for item in list_transactions(limit=50) if item["sender"] == sender)
     if sender_count >= 3:
         runtime_probability += 0.12
 
     return min(0.99, max(float(model_probability), runtime_probability))
 
 
-def generate_alerts(transaction: dict, is_anomaly: bool) -> list[dict]:
+def generate_alerts(transaction: dict, is_anomaly: bool, sender_count: int = 0) -> list[dict]:
     """Create alert rows for high-risk or unusual transactions."""
     alerts = []
 
@@ -51,7 +51,6 @@ def generate_alerts(transaction: dict, is_anomaly: bool) -> list[dict]:
             "severity": "medium",
         })
 
-    sender_count = sum(1 for item in list_transactions(limit=50) if item["sender"] == transaction["sender"])
     if sender_count >= 3:
         alerts.append({
             "type": "Suspicious account cluster",
