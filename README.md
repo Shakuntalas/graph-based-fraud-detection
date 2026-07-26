@@ -34,7 +34,7 @@ flowchart LR
   I --> N["frontend/pages + static modules"]
 ```
 
-Generated showcase asset placeholder:
+Showcase assets:
 
 ```text
 architecture.png
@@ -199,4 +199,11 @@ Run the test suite:
 python -m pytest
 ```
 
-The project includes unit tests for preprocessing, graph building, prediction, anomaly detection, authentication, database services, and explainability.
+The project includes unit tests for preprocessing, graph building, prediction, anomaly detection, authentication, database services, explainability, scoring, graph intelligence, graph export, admin analytics, transaction routes, feature importance, and model validation.
+
+Latest local verification:
+
+```text
+20 passed
+78% coverage
+```
