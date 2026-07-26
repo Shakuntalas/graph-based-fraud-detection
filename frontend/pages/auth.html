@@ -9,31 +9,39 @@
 <body data-page="auth">
   <header class="topbar">
     <a href="/" class="brand">
-      <div class="brand-mark">GF</div>
-      <div class="brand-text">
-        <strong>Graph Fraud Detection</strong>
-        <small>Return to Home</small>
-      </div>
+      <span class="brand-mark">GF</span>
+      <span class="brand-text">
+        <strong>Graph-Based Fraud Detection</strong>
+        <small>Secure access</small>
+      </span>
     </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
+      <a href="/" class="nav-button">Overview</a>
+    </nav>
   </header>
 
-  <main class="app-shell" style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
-    <section class="panel" style="width: 100%; max-width: 440px; padding: 40px;">
-      
-      <div class="auth-tabs">
-        <button class="auth-tab active" data-target="loginForm">Sign In</button>
-        <button class="auth-tab" data-target="registerForm">Create Account</button>
+  <main class="auth-shell">
+    <section class="auth-card">
+      <div class="auth-intro">
+        <p class="eyebrow">Account workspace</p>
+        <h1>Access the scanner.</h1>
+        <p class="hero-copy">Use a user account for transaction monitoring or switch to admin access for system-wide analytics.</p>
       </div>
 
-      <div id="authMessage" class="form-message"></div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" type="button" data-target="loginForm">Sign in</button>
+        <button class="auth-tab" type="button" data-target="registerForm">Create account</button>
+      </div>
 
-      <!-- User/Admin Login Form -->
+      <p id="authMessage" class="form-message" aria-live="polite"></p>
+
       <form id="loginForm" class="auth-form active">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-          <h2 style="font-size: 1.5rem;" id="loginTitle">User Login</h2>
-          <button type="button" id="toggleAdminBtn" style="background:none; border:none; color: var(--primary); font-size: 0.85rem; cursor: pointer;">Log in as Admin</button>
+        <div class="auth-heading-row">
+          <h2 id="loginTitle">User login</h2>
+          <button type="button" id="toggleAdminBtn" class="link-button">Log in as admin</button>
         </div>
-        
+
         <input type="hidden" id="loginType" value="user">
 
         <div class="field-grid">
@@ -46,12 +54,13 @@
             <input type="password" id="loginPassword" required placeholder="Enter your password">
           </label>
         </div>
-        <button type="submit" class="primary-action" style="margin-top: 24px;">Sign In</button>
+        <button type="submit" class="primary-action">Sign in</button>
       </form>
 
-      <!-- Register Form -->
       <form id="registerForm" class="auth-form">
-        <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Register</h2>
+        <div class="auth-heading-row">
+          <h2>Register</h2>
+        </div>
         <div class="field-grid">
           <label>
             Username
@@ -62,9 +71,8 @@
             <input type="password" id="regPassword" required minlength="8" placeholder="Choose a password (8+ chars)">
           </label>
         </div>
-        <button type="submit" class="primary-action" style="margin-top: 24px;">Create Account</button>
+        <button type="submit" class="primary-action">Create account</button>
       </form>
-
     </section>
   </main>
 

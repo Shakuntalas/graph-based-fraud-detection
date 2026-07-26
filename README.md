@@ -15,6 +15,7 @@ Graph-Based Fraud Detection in Financial Transaction Networks using Machine Lear
 - NetworkX graph updates after every transaction
 - PyVis graph export with risk-colored nodes and amount-scaled edges
 - Community detection for suspicious account clusters
+- Modern responsive frontend with persisted light/dark mode, project overview, architecture visual, scanner workspace, graph panel, and admin analytics views
 
 ## Architecture
 
