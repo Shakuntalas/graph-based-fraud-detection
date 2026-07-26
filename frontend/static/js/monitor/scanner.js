@@ -19,6 +19,11 @@ export function initMonitorPage() {
   state.riskChart = createRiskChart();
   renderMonitor();
   drawNetwork(state.transactions);
+  window.addEventListener("resize", () => drawNetwork(state.transactions));
+  window.addEventListener("themechange", () => {
+    drawNetwork(state.transactions);
+    updateRiskChart(state.riskChart, state.transactions);
+  });
 }
 
 function loadSample(sampleName) {
@@ -93,7 +98,7 @@ async function handleTransactionSubmit(event) {
 }
 
 function setScanLoading(isLoading) {
-  const button = document.querySelector(".primary-action");
+  const button = document.querySelector("#transactionForm .primary-action");
   if (!button) {
     return;
   }
@@ -147,6 +152,7 @@ function updateResult(result) {
   }
 
   card.className = `result-card ${result.level}`;
+  card.classList.remove("is-hidden");
   setText("resultTitle", `${result.label}: ${result.risk}%`);
   setText("resultText", result.message);
   document.getElementById("riskFill").style.width = `${result.risk}%`;

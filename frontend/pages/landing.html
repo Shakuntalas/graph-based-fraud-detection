@@ -3,115 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graph Fraud Detection | AI Security</title>
+  <title>Graph-Based Fraud Detection</title>
   <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body data-page="landing">
   <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark">GF</div>
-      <div class="brand-text">
-        <strong>Graph Fraud Detection</strong>
-        <small>AI-Powered Security</small>
-      </div>
-    </div>
-    <nav class="nav-links">
-      <a href="/login" class="nav-button">Sign In</a>
-      <a href="/register" class="btn-primary">Try for Free</a>
+    <a class="brand" href="/">
+      <span class="brand-mark">GF</span>
+      <span class="brand-text">
+        <strong>Graph-Based Fraud Detection</strong>
+        <small>Financial network intelligence</small>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
+      <a href="/login" class="nav-button">Sign in</a>
+      <a href="/register" class="btn-primary">Create account</a>
     </nav>
   </header>
 
   <main class="app-shell">
     <section class="hero">
-      <h1>Intelligent Graph-Based<br>Fraud Detection.</h1>
-      <p>
-        Uncover hidden patterns and assess transaction risk in real-time with our advanced machine learning models and dynamic graph analytics. Prevent fraud before it happens.
-      </p>
-      <div style="display: flex; gap: 16px; justify-content: center;">
-        <a href="/register" class="primary-action" style="max-width: 200px; display: inline-block; text-align: center; text-decoration: none;">Get Started Today</a>
-        <a href="#features" class="nav-button" style="border: 1px solid var(--line); display: inline-block; padding: 14px 24px; font-weight: 600;">Explore Features</a>
+      <div class="hero-copy-block">
+        <div>
+          <p class="eyebrow">Machine learning + graph analytics</p>
+          <h1>Graph-Based Fraud Detection</h1>
+        </div>
+        <p class="hero-copy">
+          A Flask and NetworkX monitoring platform that scores transactions, tracks account reputation,
+          explains fraud alerts, and visualizes suspicious financial networks in real time.
+        </p>
+        <div class="hero-actions">
+          <a href="/register" class="btn-primary">Open scanner</a>
+          <a href="/admin" class="nav-button">Admin dashboard</a>
+          <a href="/graph" class="nav-button" target="_blank" rel="noopener">View graph</a>
+        </div>
+        <div class="hero-stat-row" aria-label="Project highlights">
+          <article class="hero-stat">
+            <span>Training sample</span>
+            <strong>100k</strong>
+          </article>
+          <article class="hero-stat">
+            <span>Fraud recall</span>
+            <strong>91%</strong>
+          </article>
+          <article class="hero-stat">
+            <span>ROC-AUC</span>
+            <strong>0.99</strong>
+          </article>
+          <article class="hero-stat">
+            <span>Coverage</span>
+            <strong>78%</strong>
+          </article>
+        </div>
+      </div>
+
+      <figure class="hero-visual">
+        <div class="hero-visual-header">
+          <span>System architecture</span>
+          <span>PaySim to live monitoring</span>
+        </div>
+        <img src="/static/img/architecture.png" alt="Architecture diagram for the graph fraud detection system">
+      </figure>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">What the platform monitors</p>
+          <h2>Fraud signals that are easier to understand.</h2>
+        </div>
+        <p class="section-copy">
+          The app connects transaction-level ML with graph structure, anomaly detection, and readable alert reasons.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-icon">ML</span>
+          <h3>Balanced fraud model</h3>
+          <p>RandomForest training uses class weighting, balanced samples, validation plots, and a tuned threshold.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon">NX</span>
+          <h3>Graph intelligence</h3>
+          <p>Accounts become nodes, transactions become weighted edges, and communities reveal suspicious clusters.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon">IF</span>
+          <h3>Anomaly detection</h3>
+          <p>Isolation Forest catches unusual transaction amounts and adds runtime evidence to the risk score.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon">DB</span>
+          <h3>Account reputation</h3>
+          <p>SQLite stores users, transaction history, alert activity, and account-level risk summaries.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon">EX</span>
+          <h3>Explainable alerts</h3>
+          <p>Dashboards show why a transaction was flagged, including amount, type, frequency, and graph context.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon">UI</span>
+          <h3>Live dashboards</h3>
+          <p>User and admin pages display risk trends, analytics charts, transaction tables, and the PyVis graph.</p>
+        </article>
       </div>
     </section>
 
-    <!-- PROJECT INFO / FEATURES SECTION -->
-    <section id="features" style="margin-top: 80px; padding-top: 40px;">
-      <div style="text-align: center; margin-bottom: 60px;">
-        <p class="eyebrow">About the Project</p>
-        <h2 style="font-size: 2.5rem; margin-bottom: 16px;">Next-Generation Transaction Monitoring</h2>
-        <p style="color: var(--muted); max-width: 800px; margin: 0 auto; font-size: 1.1rem;">
-          Traditional tabular methods struggle to detect complex fraud rings. By leveraging graph theory and NetworkX, we model transactions as dynamic networks, evaluating relationships between entities to uncover sophisticated financial crimes.
-        </p>
-      </div>
-
-      <div class="workspace-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 60px;">
-        <div class="panel">
-          <h3 style="font-size: 1.5rem; margin-bottom: 16px; color: var(--primary);">Real-time Network Analysis</h3>
-          <p style="color: var(--text); line-height: 1.6;">
-            Our proprietary graph builder constructs complex relationship networks across accounts to detect rings of fraud that traditional tabular methods miss.
-          </p>
-        </div>
-        <div class="panel">
-          <h3 style="font-size: 1.5rem; margin-bottom: 16px; color: var(--secondary);">Machine Learning Core</h3>
-          <p style="color: var(--text); line-height: 1.6;">
-            Trained on high-volume financial datasets (PaySim), our ensemble Balanced Random Forest evaluates PageRank, degree centrality, and clustering coefficients to flag high-risk transfers instantly.
-          </p>
-        </div>
-        <div class="panel">
-          <h3 style="font-size: 1.5rem; margin-bottom: 16px; color: var(--accent);">Unified Dashboard</h3>
-          <p style="color: var(--text); line-height: 1.6;">
-            Monitor transactions, visualize node relationships in a PyVis-powered live graph, and track your organizational risk footprint all from a single pane of glass.
-          </p>
+    <section class="panel">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Pipeline</p>
+          <h2>Dataset to prediction flow.</h2>
         </div>
       </div>
-
-      <!-- Deep Dive Section -->
-      <div class="panel" style="margin-bottom: 60px;">
-        <div class="panel-heading">
-          <div>
-            <p class="eyebrow">The Architecture</p>
-            <h2 style="font-size: 2rem;">How It Works Under The Hood</h2>
-          </div>
+      <div class="pipeline-band">
+        <div class="pipeline-step">
+          <strong>1. Preprocess</strong>
+          <span>Clean PaySim rows and encode transaction types.</span>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 24px;">
-          <div>
-            <h4 style="font-size: 1.2rem; margin-bottom: 8px;">1. The PaySim Dataset</h4>
-            <p style="color: var(--muted); margin-bottom: 24px;">
-              Our model is trained on a synthetic dataset representing mobile money transactions. By analyzing millions of legitimate and fraudulent cash-outs and transfers, the system learns the subtle differences between normal behavior and organized theft.
-            </p>
-            
-            <h4 style="font-size: 1.2rem; margin-bottom: 8px;">2. Graph Feature Extraction</h4>
-            <p style="color: var(--muted); margin-bottom: 24px;">
-              Before making a prediction, the backend constructs a NetworkX directed graph. It calculates critical graph-theoretic metrics for every account involved in a transaction:
-              <ul style="margin-top: 8px; margin-left: 20px; color: var(--muted);">
-                <li><strong>PageRank:</strong> Identifies central "hub" accounts often used for laundering.</li>
-                <li><strong>In/Out Degree:</strong> Detects anomalies in receiving vs. sending volumes.</li>
-                <li><strong>Clustering Coefficient:</strong> Spots tightly knit groups of accounts coordinating illicit transfers.</li>
-              </ul>
-            </p>
-          </div>
-          <div>
-            <h4 style="font-size: 1.2rem; margin-bottom: 8px;">3. The Ensemble Model</h4>
-            <p style="color: var(--muted); margin-bottom: 24px;">
-              Because financial fraud is extremely imbalanced (fraud occurs in less than 0.1% of transactions), standard models fail. We utilize a <strong>Balanced Random Forest Classifier</strong> that is highly sensitive to minority classes, combined with SMOTE (Synthetic Minority Over-sampling Technique).
-            </p>
-
-            <h4 style="font-size: 1.2rem; margin-bottom: 8px;">4. Tech Stack</h4>
-            <p style="color: var(--muted); margin-bottom: 24px;">
-              The system operates entirely via a REST API. The backend is powered by <strong>Python (Flask)</strong>, <strong>Scikit-Learn</strong>, and <strong>NetworkX</strong>. The frontend uses a proprietary vanilla JavaScript component framework with <strong>Chart.js</strong> for analytics and HTML Canvas for live topology rendering.
-            </p>
-          </div>
+        <div class="pipeline-step">
+          <strong>2. Build graph</strong>
+          <span>Model sender and receiver accounts as a directed network.</span>
         </div>
-      </div>
-
-      <!-- Call to Action -->
-      <div class="panel" style="text-align: center; background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));">
-        <h2 style="font-size: 2rem; margin-bottom: 16px;">Ready to secure your network?</h2>
-        <p style="color: var(--muted); max-width: 600px; margin: 0 auto 32px; font-size: 1.1rem;">
-          Try out the live transaction scanner and watch the graph evolve in real-time as you submit data.
-        </p>
-        <a href="/register" class="primary-action" style="max-width: 200px; display: inline-block; text-align: center; text-decoration: none;">Create an Account</a>
+        <div class="pipeline-step">
+          <strong>3. Engineer features</strong>
+          <span>Add degree, PageRank, clustering, frequency, and amount totals.</span>
+        </div>
+        <div class="pipeline-step">
+          <strong>4. Score risk</strong>
+          <span>Run model probability, custom threshold, and anomaly checks.</span>
+        </div>
+        <div class="pipeline-step">
+          <strong>5. Explain</strong>
+          <span>Store risk level, alerts, graph updates, and readable reasons.</span>
+        </div>
       </div>
     </section>
   </main>
+
+  <script type="module" src="/static/js/app.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import { escapeHtml, formatCurrency, formatPercent, formatTime, setText } from "
 export function initAdminDashboard() {
   document.getElementById("refreshAdminButton").addEventListener("click", loadAdminTransactions);
   createModelChart();
+  window.addEventListener("themechange", loadAdminTransactions);
 }
 
 export async function loadAdminTransactions() {
@@ -93,9 +94,10 @@ function renderFeatureImportance(features) {
 const analyticsCharts = new Map();
 
 function renderAnalyticsCharts(analytics) {
-  renderTrendChart("fraudTrendChart", analytics.fraud_trend || [], "fraud", "Fraud", "#ff6b6b");
-  renderTrendChart("alertTrendChart", analytics.alert_trend || [], "total", "Alerts", "#f5a623");
-  renderTrendChart("userGrowthChart", analytics.user_growth || [], "total", "New users", "#44d19d");
+  const colors = getThemeColors();
+  renderTrendChart("fraudTrendChart", analytics.fraud_trend || [], "fraud", "Fraud", colors.danger);
+  renderTrendChart("alertTrendChart", analytics.alert_trend || [], "total", "Alerts", colors.warning);
+  renderTrendChart("userGrowthChart", analytics.user_growth || [], "total", "New users", colors.accent);
   renderDistributionChart(analytics.transaction_distribution || []);
 }
 
@@ -106,7 +108,7 @@ function renderTrendChart(id, rows, valueKey, label, color) {
   analyticsCharts.set(id, new Chart(canvas, {
     type: "line",
     data: { labels: rows.map((row) => row.date), datasets: [{ label, data: rows.map((row) => row[valueKey]), borderColor: color, tension: 0.3 }] },
-    options: { responsive: true, plugins: { legend: { labels: { color: "#edf2f6" } } } }
+    options: themedChartOptions()
   }));
 }
 
@@ -114,12 +116,47 @@ function renderDistributionChart(rows) {
   const id = "transactionDistributionChart";
   const canvas = document.getElementById(id);
   if (!canvas || !window.Chart) return;
+  const colors = getThemeColors();
   analyticsCharts.get(id)?.destroy();
   analyticsCharts.set(id, new Chart(canvas, {
     type: "doughnut",
-    data: { labels: rows.map((row) => row.label), datasets: [{ data: rows.map((row) => row.total), backgroundColor: ["#5eb1ff", "#44d19d", "#f5a623", "#ff6b6b", "#9d4edd"] }] },
-    options: { responsive: true, plugins: { legend: { labels: { color: "#edf2f6" } } } }
+    data: { labels: rows.map((row) => row.label), datasets: [{ data: rows.map((row) => row.total), backgroundColor: [colors.primary, colors.accent, colors.warning, colors.danger, colors.muted] }] },
+    options: themedChartOptions()
   }));
+}
+
+function themedChartOptions() {
+  const colors = getThemeColors();
+  return {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: colors.text } }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { color: colors.muted },
+        grid: { color: colors.grid }
+      },
+      x: {
+        ticks: { color: colors.muted },
+        grid: { display: false }
+      }
+    }
+  };
+}
+
+function getThemeColors() {
+  const styles = getComputedStyle(document.body);
+  return {
+    primary: styles.getPropertyValue("--primary").trim() || "#5eb1ff",
+    accent: styles.getPropertyValue("--accent").trim() || "#42d392",
+    warning: styles.getPropertyValue("--warning").trim() || "#f5a623",
+    danger: styles.getPropertyValue("--danger").trim() || "#ff5d5d",
+    text: styles.getPropertyValue("--text").trim() || "#eef4f8",
+    muted: styles.getPropertyValue("--muted").trim() || "#9cacbc",
+    grid: styles.getPropertyValue("--line").trim() || "#2c3b4d",
+  };
 }
 
 function renderAdminAlerts(alerts) {

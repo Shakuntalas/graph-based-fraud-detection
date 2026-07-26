@@ -3,77 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | Graph Fraud Detection</title>
+  <title>User Dashboard | Graph Fraud Detection</title>
   <link rel="stylesheet" href="/static/css/main.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body data-page="dashboard">
   <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark">GF</div>
-      <div class="brand-text">
-        <strong>Graph Fraud Detection</strong>
-        <small>Intelligent Monitoring</small>
-      </div>
-    </div>
-    <nav class="nav-links">
+    <a class="brand" href="/">
+      <span class="brand-mark">GF</span>
+      <span class="brand-text">
+        <strong>Graph-Based Fraud Detection</strong>
+        <small>Transaction scanner</small>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
       <a href="/dashboard" class="nav-button" aria-current="page">Dashboard</a>
       <button class="nav-button" id="userLogoutButton" type="button">Logout</button>
     </nav>
   </header>
 
   <main class="app-shell">
-    
-    <!-- User Overview & Pipeline Status -->
-    <section class="panel" style="margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: linear-gradient(135deg, rgba(79, 138, 255, 0.05), rgba(157, 78, 221, 0.05));">
+    <section class="hero-panel dashboard-hero">
       <div>
-        <p class="eyebrow" id="userAccountText">Welcome back</p>
-        <h1 style="font-size: 2.2rem; margin-bottom: 16px;" id="userDashboardTitle">User Dashboard</h1>
-        <p style="color: var(--muted); font-size: 1.05rem;">
-          Assess transaction risk with graph-aware signals in real-time. The ML pipeline uses PageRank, degree, and clustering to detect anomalies.
+        <p class="eyebrow" id="userAccountText">Account loading</p>
+        <h1 id="userDashboardTitle">User Dashboard</h1>
+        <p class="hero-copy">
+          Submit a transaction, update the runtime graph, and review the model probability,
+          anomaly signal, risk level, and saved alert history in one workspace.
         </p>
       </div>
-      <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: flex-end;">
-        <div style="text-align: right; background: rgba(0,0,0,0.2); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--line);">
-          <span style="font-size: 0.8rem; color: var(--muted); text-transform: uppercase;">Total Trans</span>
-          <strong style="display: block; font-size: 1.5rem; color: var(--text);" id="userTotalTransactions">0</strong>
-        </div>
-        <div style="text-align: right; background: rgba(0,0,0,0.2); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--line);">
-          <span style="font-size: 0.8rem; color: var(--muted); text-transform: uppercase;">Fraud Flags</span>
-          <strong style="display: block; font-size: 1.5rem; color: var(--warning);" id="userFlaggedTransactions">0</strong>
-        </div>
-        <div style="text-align: right; background: rgba(0,0,0,0.2); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--line);">
-          <span style="font-size: 0.8rem; color: var(--muted); text-transform: uppercase;">Personal Risk</span>
-          <strong style="display: block; font-size: 1.5rem; color: var(--danger);" id="userPersonalRisk">0%</strong>
-        </div>
+      <div class="dashboard-summary">
+        <article class="summary-tile">
+          <span>Total transactions</span>
+          <strong id="userTotalTransactions">0</strong>
+        </article>
+        <article class="summary-tile">
+          <span>Fraud flags</span>
+          <strong id="userFlaggedTransactions">0</strong>
+        </article>
+        <article class="summary-tile">
+          <span>Personal risk</span>
+          <strong id="userPersonalRisk">0%</strong>
+        </article>
       </div>
     </section>
 
-    <section class="analytics-grid">
-      <article class="metric-card"><span>Total Sent</span><strong id="userTotalSent">$0</strong></article>
-      <article class="metric-card"><span>Total Received</span><strong id="userTotalReceived">$0</strong></article>
-      <article class="metric-card"><span>Average Amount</span><strong id="userAverageAmount">$0</strong></article>
-      <article class="metric-card"><span>Account Risk Level</span><strong id="userRiskLevel">LOW</strong></article>
+    <section class="analytics-grid" aria-label="Account statistics">
+      <article class="metric-card"><span>Total sent</span><strong id="userTotalSent">$0</strong></article>
+      <article class="metric-card"><span>Total received</span><strong id="userTotalReceived">$0</strong></article>
+      <article class="metric-card"><span>Average amount</span><strong id="userAverageAmount">$0</strong></article>
+      <article class="metric-card"><span>Account risk</span><strong id="userRiskLevel">LOW</strong></article>
     </section>
 
-    <!-- Scanner & Graph Grid -->
     <section class="workspace-grid">
       <form class="panel" id="transactionForm">
         <div class="panel-heading">
           <div>
-            <p class="eyebrow">Transaction Scanner</p>
-            <h2>New Transfer</h2>
+            <p class="eyebrow">Transaction scanner</p>
+            <h2>New transfer</h2>
           </div>
-          <span style="font-size: 0.85rem; padding: 4px 12px; border: 1px solid var(--primary); color: var(--primary); border-radius: 20px;">Live Model API</span>
+          <span class="mode-badge">Live model API</span>
         </div>
 
         <div class="field-grid">
           <label>
-            Sender Account (Your ID)
+            Sender account
             <input id="sender" name="sender" type="text" autocomplete="off" placeholder="C1231006815" required>
           </label>
           <label>
-            Receiver Account
+            Receiver account
             <input id="receiver" name="receiver" type="text" autocomplete="off" placeholder="M1979787155" required>
           </label>
           <label>
@@ -81,7 +80,7 @@
             <input id="amount" name="amount" type="number" min="1" step="0.01" placeholder="9839.64" required>
           </label>
           <label>
-            Transfer Type
+            Transfer type
             <select id="type" name="type">
               <option value="PAYMENT">PAYMENT</option>
               <option value="TRANSFER">TRANSFER</option>
@@ -93,73 +92,59 @@
         </div>
 
         <div class="quick-actions">
-          <button type="button" data-sample="normal">Load Normal Sample</button>
-          <button type="button" data-sample="highRisk">Load High-Risk Sample</button>
+          <button type="button" data-sample="normal">Normal sample</button>
+          <button type="button" data-sample="highRisk">High-risk sample</button>
         </div>
 
-        <button class="primary-action" type="submit">Assess Risk & Submit</button>
+        <button class="primary-action scan-submit" type="submit">Assess risk</button>
 
-        <div class="result-card" id="resultCard" style="display: none;">
-          <span class="eyebrow">Scan Result</span>
-          <strong id="resultTitle" style="display:block; font-size:1.4rem; margin-bottom:8px;">Awaiting Transaction</strong>
-          <p id="resultText" style="color:var(--muted); font-size:0.95rem; margin-bottom: 0;">Evaluating risk...</p>
-          <div class="risk-meter">
+        <div class="result-card is-hidden" id="resultCard">
+          <span class="eyebrow">Scan result</span>
+          <strong id="resultTitle">Awaiting transaction</strong>
+          <p id="resultText" class="section-copy">The result will appear after submission.</p>
+          <div class="risk-meter" aria-hidden="true">
             <span id="riskFill"></span>
           </div>
         </div>
       </form>
 
-      <div class="panel graph-panel">
+      <section class="panel graph-panel">
         <div class="panel-heading">
           <div>
-            <p class="eyebrow">Network Topology</p>
-            <h2>Live Graph View</h2>
+            <p class="eyebrow">Network topology</p>
+            <h2>Live graph view</h2>
           </div>
-          <span id="graphSummary" style="font-size: 0.85rem; color: var(--primary);">0 nodes</span>
+          <span id="graphSummary" class="mode-badge">0 nodes</span>
         </div>
-        <canvas id="networkCanvas" height="420" style="background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px;"></canvas>
-      </div>
+        <canvas id="networkCanvas" class="graph-canvas" height="420"></canvas>
+      </section>
     </section>
 
-    <!-- Live Scanner Analytics Grid -->
-    <section class="analytics-grid">
-      <article class="metric-card">
-        <span>Scanned Txs</span>
-        <strong id="totalTransactions">0</strong>
-      </article>
-      <article class="metric-card">
-        <span>Local Flags</span>
-        <strong id="flaggedTransactions">0</strong>
-      </article>
-      <article class="metric-card">
-        <span>Session Risk</span>
-        <strong id="averageRisk">0%</strong>
-      </article>
-      <article class="metric-card">
-        <span>Network Nodes</span>
-        <strong id="knownAccounts">0</strong>
-      </article>
+    <section class="analytics-grid" aria-label="Scanner session statistics">
+      <article class="metric-card"><span>Scanned txs</span><strong id="totalTransactions">0</strong></article>
+      <article class="metric-card"><span>Local flags</span><strong id="flaggedTransactions">0</strong></article>
+      <article class="metric-card"><span>Session risk</span><strong id="averageRisk">0%</strong></article>
+      <article class="metric-card"><span>Network nodes</span><strong id="knownAccounts">0</strong></article>
     </section>
 
-    <!-- Monitor Audit Trail & Risk Chart -->
     <section class="workspace-grid bottom-grid">
       <section class="panel">
         <div class="panel-heading">
           <div>
             <p class="eyebrow">Risk trend</p>
-            <h2>Latest Scans</h2>
+            <h2>Latest scans</h2>
           </div>
         </div>
-        <canvas id="riskChart" height="160"></canvas>
+        <canvas id="riskChart" height="180"></canvas>
       </section>
 
       <section class="panel">
         <div class="panel-heading">
           <div>
-            <p class="eyebrow">Scanner Audit</p>
-            <h2>Session Trial</h2>
+            <p class="eyebrow">Scanner audit</p>
+            <h2>Session trial</h2>
           </div>
-          <a class="nav-button" href="/graph" target="_blank" rel="noopener" style="font-size: 0.85rem;">Open Full PyVis</a>
+          <a class="mode-badge" href="/graph" target="_blank" rel="noopener">Open PyVis graph</a>
         </div>
         <div class="table-wrap">
           <table>
@@ -178,12 +163,11 @@
       </section>
     </section>
 
-    <!-- Saved Transaction History -->
-    <section class="panel" style="margin-top: 24px;">
+    <section class="panel">
       <div class="panel-heading">
         <div>
-          <p class="eyebrow">Database Records</p>
-          <h2>Your Transaction History</h2>
+          <p class="eyebrow">Database records</p>
+          <h2>Your transaction history</h2>
         </div>
       </div>
       <div class="table-wrap">
@@ -196,8 +180,8 @@
               <th>Type</th>
               <th>Amount</th>
               <th>Status</th>
-              <th>Risk Score</th>
-              <th>Risk Level</th>
+              <th>Risk score</th>
+              <th>Risk level</th>
               <th>Explanation</th>
             </tr>
           </thead>
@@ -206,22 +190,17 @@
       </div>
     </section>
 
-    <section class="panel" style="margin-top: 24px;">
+    <section class="panel">
       <div class="panel-heading">
-        <div><p class="eyebrow">Explainable Monitoring</p><h2>Recent Alerts</h2></div>
+        <div>
+          <p class="eyebrow">Explainable monitoring</p>
+          <h2>Recent alerts</h2>
+        </div>
       </div>
       <ul class="insight-list" id="userAlertsList"><li>No recent alerts.</li></ul>
     </section>
-
   </main>
 
   <script type="module" src="/static/js/app.js"></script>
-  <script>
-    // Ensure result card is shown properly when scanning begins
-    const origSubmit = window.handleTransactionSubmit; // just to show it, handled in JS natively
-    document.getElementById("transactionForm").addEventListener("submit", () => {
-      document.getElementById("resultCard").style.display = "block";
-    });
-  </script>
 </body>
 </html>
